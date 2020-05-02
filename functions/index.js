@@ -1,6 +1,5 @@
 const functions = require('firebase-functions');
 const puppeteer = require('puppeteer');
-const cheerio = require('cheerio');
 const axios = require('axios');
 
 const op = {
