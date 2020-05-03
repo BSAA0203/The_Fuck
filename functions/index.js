@@ -90,7 +90,6 @@ exports.news = functions
     })
 
 exports.ticktock = functions
-    .runWith(op)
     .region('asia-northeast1')
     .pubsub
     .schedule('0 12 * * *')
