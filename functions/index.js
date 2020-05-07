@@ -119,14 +119,11 @@ exports.game_news = functions
             const page = await browser.newPage();
             await page.setDefaultNavigationTimeout(0);
             await page.goto(
-                'https://bbs.ruliweb.com/news',
+                'https://konsoler.com/g2/bbs/board.php?bo_table=consolenews&r=ok',
                 {waitUntil: "domcontentloaded"}
             );
             const title = '오늘의 게임 뉴우스';
-            const news = await page.$eval(
-                '#main_top_game_news2 > div.widget_bottom.row',
-                (e) => e.outerText
-            );
+            const news = await page.$eval('#list_table', (e) => e.outerText);
             console.log(news);
 
             const ID = "smw0393@naver.com";
