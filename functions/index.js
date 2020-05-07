@@ -18,19 +18,20 @@ exports.news = functions
             });
             const page = await browser.newPage();
             await page.setDefaultNavigationTimeout(0);
-            await page.goto('https://news.naver.com/main/ranking/popularDay.nhn');
-            await page.waitForSelector('#right_dailyList');
+            await page.goto(
+                'https://news.naver.com/main/ranking/popularDay.nhn',
+                {waitUntil: "domcontentloaded"}
+            );
             const title = '오늘의 국내 뉴우스';
-            const news = await page.evaluate(() => {
-                return document
-                    .querySelector("#right_dailyList")
-                    .textContent;
-            });
+            const news = await page.$eval('#right_dailyList', (e) => e.textContent);
             console.log(news);
 
             const ID = "smw0393@naver.com";
             const PW = "Apsj1860178*";
-            await page.goto('https://www.thecamp.or.kr/login/viewLogin.do');
+            await page.goto(
+                'https://www.thecamp.or.kr/login/viewLogin.do',
+                {waitUntil: "domcontentloaded"}
+            );
             await page.evaluate((id, pw) => {
                 document
                     .querySelector('#userId')
@@ -38,30 +39,35 @@ exports.news = functions
                 document
                     .querySelector('#userPwd')
                     .value = pw;
+                document
+                    .querySelector('#emailLoginBtn')
+                    .click();
             }, ID, PW);
-            await page.click('#emailLoginBtn');
             await page.waitForNavigation();
+            console.log('login success');
 
-            await page.goto('https://www.thecamp.or.kr/eduUnitCafe/viewEduUnitCafeMain.do')
-            await page.waitForSelector(
-                '#divSlide1 > div.swiper-wrapper > div.swiper-slide.swiper-slide-active.swiper-' +
-                'slide-duplicate-next.swiper-slide-duplicate-prev > div > div.btn-wrap > a.btn-' +
-                'green'
+            await page.goto(
+                'https://www.thecamp.or.kr/eduUnitCafe/viewEduUnitCafeMain.do',
+                {waitUntil: "domcontentloaded"}
             );
-            await page.click(
-                '#divSlide1 > div.swiper-wrapper > div.swiper-slide.swiper-slide-active.swiper-' +
-                'slide-duplicate-next.swiper-slide-duplicate-prev > div > div.btn-wrap > a.btn-' +
-                'green'
-            );
+            await page.evaluate(() => {
+                document
+                    .querySelector(
+                        '#divSlide1 > div.swiper-wrapper > div.swiper-slide.swiper-slide-active.swiper-' +
+                        'slide-duplicate-next.swiper-slide-duplicate-prev > div > div.btn-wrap > a.btn-' +
+                        'green'
+                    )
+                    .click();
+            });
             await page.waitForNavigation();
-            await page.waitForSelector(
-                'body > div.container > div.container-wrap > div:nth-child(2) > div.btn-a-wrap.' +
-                'text-center.mt50 > button'
-            );
-            await page.click(
-                'body > div.container > div.container-wrap > div:nth-child(2) > div.btn-a-wrap.' +
-                'text-center.mt50 > button'
-            );
+            await page.evaluate(() => {
+                document
+                    .querySelector(
+                        'body > div.container > div.container-wrap > div:nth-child(2) > div.btn-a-wrap.' +
+                        'text-center.mt50 > button'
+                    )
+                    .click();
+            });
             await page.waitForNavigation();
             await page.waitForSelector('#cke_1_contents > iframe');
             console.log('\niframe is ready. Loading iframe content');
@@ -77,15 +83,19 @@ exports.news = functions
                     .querySelector('body > p')
                     .innerText = info;
             }, news);
-            await page.click(
-                'body > div.container > div.container-wrap > section > div.btn-b-area > a:nth-c' +
-                'hild(3)'
-            );
+            await page.evaluate(() => {
+                document
+                    .querySelector(
+                        'body > div.container > div.container-wrap > section > div.btn-b-area > a:nth-c' +
+                        'hild(3)'
+                    )
+                    .click();
+            })
             await browser.close();
             console.log('success');
         } catch (error) {
-            console.log('wtf : ', error);
-        };
+            console.log('WTF : ', error);
+        }
         return null;
     });
 
@@ -94,84 +104,6 @@ exports.jp_news = functions
     .region('asia-northeast1')
     .https
     .onRequest(async () => {
-        try {
-            const browser = await puppeteer.launch({
-                args: ['--no-sandbox', '--disable-setuid-sandbox']
-            });
-            const page = await browser.newPage();
-            await page.setDefaultNavigationTimeout(0);
-            await page.goto('https://www3.nhk.or.jp/nhkworld/ko/news/list/');
-            await page.waitForSelector(
-                'body > div > div > div > div > div > div:nth-child(2)'
-            );
-            const jp_title = '오늘의 일본 뉴우스';
-            const jp_news = await page.evaluate(() => {
-                return document
-                    .querySelector(
-                        "body > div > div > div > div > div > div:nth-child(2)"
-                    )
-                    .outerText;
-            });
-            console.log(jp_news);
-
-            const ID = "smw0393@naver.com";
-            const PW = "Apsj1860178*";
-            await page.goto('https://www.thecamp.or.kr/login/viewLogin.do');
-            await page.evaluate((id, pw) => {
-                document
-                    .querySelector('#userId')
-                    .value = id;
-                document
-                    .querySelector('#userPwd')
-                    .value = pw;
-            }, ID, PW);
-            await page.click('#emailLoginBtn');
-            await page.waitForNavigation();
-
-            await page.goto('https://www.thecamp.or.kr/eduUnitCafe/viewEduUnitCafeMain.do')
-            await page.waitForSelector(
-                '#divSlide1 > div.swiper-wrapper > div.swiper-slide.swiper-slide-active.swiper-' +
-                'slide-duplicate-next.swiper-slide-duplicate-prev > div > div.btn-wrap > a.btn-' +
-                'green'
-            );
-            await page.click(
-                '#divSlide1 > div.swiper-wrapper > div.swiper-slide.swiper-slide-active.swiper-' +
-                'slide-duplicate-next.swiper-slide-duplicate-prev > div > div.btn-wrap > a.btn-' +
-                'green'
-            );
-            await page.waitForNavigation();
-            await page.waitForSelector(
-                'body > div.container > div.container-wrap > div:nth-child(2) > div.btn-a-wrap.' +
-                'text-center.mt50 > button'
-            );
-            await page.click(
-                'body > div.container > div.container-wrap > div:nth-child(2) > div.btn-a-wrap.' +
-                'text-center.mt50 > button'
-            );
-            await page.waitForNavigation();
-            await page.waitForSelector('#cke_1_contents > iframe');
-            console.log('\niframe2 is ready. Loading iframe content');
-            await page.evaluate((tt) => {
-                document
-                    .querySelector('#sympathyLetterSubject')
-                    .value = tt;
-            }, jp_title);
-            const el = await page.$('#cke_1_contents > iframe');
-            const frame = await el.contentFrame();
-            await frame.evaluate((info) => {
-                document
-                    .querySelector('body > p')
-                    .innerText = info;
-            }, jp_news);
-            await page.click(
-                'body > div.container > div.container-wrap > section > div.btn-b-area > a:nth-c' +
-                'hild(3)'
-            );
-            await browser.close();
-            console.log('success');
-        } catch (error) {
-            console.log('wtf : ', error);
-        };
         return null;
     });
 
@@ -186,25 +118,23 @@ exports.game_news = functions
             });
             const page = await browser.newPage();
             await page.setDefaultNavigationTimeout(0);
-            await page.goto('https://www.gamemeca.com/news.php');
-            await page.waitForSelector(
-                '#content > div.news-list > div.content-right > div > div.rank_wrap > div.rank_' +
-                'list > ul:nth-child(1)'
+            await page.goto(
+                'https://bbs.ruliweb.com/news',
+                {waitUntil: "domcontentloaded"}
             );
-            const game_title = '오늘의 게임 뉴우스';
-            const game_news = await page.evaluate(() => {
-                return document
-                    .querySelector(
-                        "#content > div.news-list > div.content-right > div > div.rank_wrap > div.rank_" +
-                        "list"
-                    )
-                    .outerText;
-            });
-            console.log(game_news.replace(/\t/g, ""));
+            const title = '오늘의 게임 뉴우스';
+            const news = await page.$eval(
+                '#main_top_game_news2 > div.widget_bottom.row',
+                (e) => e.outerText
+            );
+            console.log(news);
 
             const ID = "smw0393@naver.com";
             const PW = "Apsj1860178*";
-            await page.goto('https://www.thecamp.or.kr/login/viewLogin.do');
+            await page.goto(
+                'https://www.thecamp.or.kr/login/viewLogin.do',
+                {waitUntil: "domcontentloaded"}
+            );
             await page.evaluate((id, pw) => {
                 document
                     .querySelector('#userId')
@@ -212,30 +142,35 @@ exports.game_news = functions
                 document
                     .querySelector('#userPwd')
                     .value = pw;
+                document
+                    .querySelector('#emailLoginBtn')
+                    .click();
             }, ID, PW);
-            await page.click('#emailLoginBtn');
             await page.waitForNavigation();
+            console.log('login success');
 
-            await page.goto('https://www.thecamp.or.kr/eduUnitCafe/viewEduUnitCafeMain.do')
-            await page.waitForSelector(
-                '#divSlide1 > div.swiper-wrapper > div.swiper-slide.swiper-slide-active.swiper-' +
-                'slide-duplicate-next.swiper-slide-duplicate-prev > div > div.btn-wrap > a.btn-' +
-                'green'
+            await page.goto(
+                'https://www.thecamp.or.kr/eduUnitCafe/viewEduUnitCafeMain.do',
+                {waitUntil: "domcontentloaded"}
             );
-            await page.click(
-                '#divSlide1 > div.swiper-wrapper > div.swiper-slide.swiper-slide-active.swiper-' +
-                'slide-duplicate-next.swiper-slide-duplicate-prev > div > div.btn-wrap > a.btn-' +
-                'green'
-            );
+            await page.evaluate(() => {
+                document
+                    .querySelector(
+                        '#divSlide1 > div.swiper-wrapper > div.swiper-slide.swiper-slide-active.swiper-' +
+                        'slide-duplicate-next.swiper-slide-duplicate-prev > div > div.btn-wrap > a.btn-' +
+                        'green'
+                    )
+                    .click();
+            });
             await page.waitForNavigation();
-            await page.waitForSelector(
-                'body > div.container > div.container-wrap > div:nth-child(2) > div.btn-a-wrap.' +
-                'text-center.mt50 > button'
-            );
-            await page.click(
-                'body > div.container > div.container-wrap > div:nth-child(2) > div.btn-a-wrap.' +
-                'text-center.mt50 > button'
-            );
+            await page.evaluate(() => {
+                document
+                    .querySelector(
+                        'body > div.container > div.container-wrap > div:nth-child(2) > div.btn-a-wrap.' +
+                        'text-center.mt50 > button'
+                    )
+                    .click();
+            });
             await page.waitForNavigation();
             await page.waitForSelector('#cke_1_contents > iframe');
             console.log('\niframe3 is ready. Loading iframe content');
@@ -243,23 +178,27 @@ exports.game_news = functions
                 document
                     .querySelector('#sympathyLetterSubject')
                     .value = tt;
-            }, game_title);
+            }, title);
             const el = await page.$('#cke_1_contents > iframe');
             const frame = await el.contentFrame();
             await frame.evaluate((info) => {
                 document
                     .querySelector('body > p')
                     .innerText = info;
-            }, game_news);
-            await page.click(
-                'body > div.container > div.container-wrap > section > div.btn-b-area > a:nth-c' +
-                'hild(3)'
-            );
+            }, news);
+            await page.evaluate(() => {
+                document
+                    .querySelector(
+                        'body > div.container > div.container-wrap > section > div.btn-b-area > a:nth-c' +
+                        'hild(3)'
+                    )
+                    .click();
+            })
             await browser.close();
             console.log('success');
         } catch (error) {
-            console.log('wtf : ', error);
-        };
+            console.log('WTF : ', error);
+        }
         return null;
     });
 
