@@ -26,8 +26,8 @@ exports.news = functions
             const news = await page.$eval('#right_dailyList', (e) => e.textContent);
             console.log(news);
 
-            const ID = "smw0393@naver.com";
-            const PW = "Apsj1860178*";
+            const ID = "";
+            const PW = "";
             await page.goto(
                 'https://www.thecamp.or.kr/login/viewLogin.do',
                 {waitUntil: "domcontentloaded"}
@@ -124,8 +124,8 @@ exports.jp_news = functions
             });
             console.log(news);
 
-            const ID = "smw0393@naver.com";
-            const PW = "Apsj1860178*";
+            const ID = "";
+            const PW = "";
             await page.goto(
                 'https://www.thecamp.or.kr/login/viewLogin.do',
                 {waitUntil: "domcontentloaded"}
@@ -216,8 +216,8 @@ exports.game_news = functions
             const news = await page.$eval('#list_table', (e) => e.outerText);
             console.log(news);
 
-            const ID = "smw0393@naver.com";
-            const PW = "Apsj1860178*";
+            const ID = "";
+            const PW = "";
             await page.goto(
                 'https://www.thecamp.or.kr/login/viewLogin.do',
                 {waitUntil: "domcontentloaded"}
