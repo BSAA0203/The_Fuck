@@ -1,5 +1,5 @@
-# The_Fuck
-**This is for my brother**
+# The_Camp
+**This is for my brothers**
 # Prerequisites
     Node.js v10.16.3
     
@@ -13,4 +13,4 @@ https://github.com/puppeteer/puppeteer
 
     Headless browser 라이브러리
 # License
-This project is licensed under the MIT License - see the [The_Fuck/LICENSE](LICENSE)
+This project is licensed under the MIT License - see the [The_Camp/LICENSE](LICENSE)
