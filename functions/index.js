@@ -126,6 +126,7 @@ exports.news = functions
                     )
                     .click();
             });
+            await page.waitForNavigation();
             await browser.close();
             console.log('success');
         } catch (error) {
