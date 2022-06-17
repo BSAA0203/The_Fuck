@@ -4,6 +4,10 @@
     nodeJS v10.16.3
     
     Firebase V8.4.1
+# Get Start
+    > cd functions
+    > npm install
+    > npm start
 # Open-source library
 https://github.com/puppeteer/puppeteer
 
