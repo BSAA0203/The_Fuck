@@ -1,14 +1,10 @@
-# The_Camp
+# The-Camp
 **This is for my brothers**
 # Prerequisites
-    Node.js v10.16.3
+    nodeJS v10.16.3
     
     Firebase V8.4.1
-# Open-source libraries
-https://github.com/axios/axios
-
-    HTTP 통신 라이브러리
-    
+# Open-source library
 https://github.com/puppeteer/puppeteer
 
     Headless browser 라이브러리
