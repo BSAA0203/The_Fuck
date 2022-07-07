@@ -4,7 +4,7 @@ const puppeteer = require('puppeteer');
 const op = {
     timeoutSeconds: 60,
     memory: '512MB'
-} // puppeteer 사용에 필요한 functions 옵션 값 지정
+} // puppeteer 사용에 필요한 functions 옵션 값 지정.
 
 exports.news = functions // functions 함수 이름
     .runWith(op) // 옵션 설정
